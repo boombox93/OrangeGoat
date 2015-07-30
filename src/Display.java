@@ -7,9 +7,9 @@ import javax.swing.JFrame;
 public class Display 
 {
 	//The window
-	private JFrame frame;
+	private JFrame _frame;
 	//Draws graphics on window
-	private Canvas canvas;
+	private Canvas _canvas;
 	
 	private String _title;
 	private int _width; 
@@ -28,25 +28,30 @@ public class Display
 	
 	private void createDisplay()
 	{
-		frame = new JFrame(_title);
-		frame.setSize(_width, _height);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		_frame = new JFrame(_title);
+		_frame.setSize(_width, _height);
+		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//User can't resize window
-		frame.setResizable(false);
+		_frame.setResizable(false);
 		
 		//Window always appears in center of screen
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		_frame.setLocationRelativeTo(null);
+		_frame.setVisible(true);
 		
-		canvas = new Canvas();
+		_canvas = new Canvas();
 		
 		//Forces canvas to stay width and height given at all times
-		canvas.setPreferredSize(new Dimension(_width, _height));
-		canvas.setMaximumSize(new Dimension(_width, _height));
-		canvas.setMinimumSize(new Dimension(_width, _height));
+		_canvas.setPreferredSize(new Dimension(_width, _height));
+		_canvas.setMaximumSize(new Dimension(_width, _height));
+		_canvas.setMinimumSize(new Dimension(_width, _height));
 		
-		frame.add(canvas);
-		frame.pack();
+		_frame.add(_canvas);
+		_frame.pack();
+	}
+	
+	public Canvas getCanvas()
+	{
+		return _canvas;
 	}
 }
