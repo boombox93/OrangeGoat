@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 
 //This is the main class
@@ -16,6 +17,10 @@ public class Game implements Runnable
 	private Graphics _g;
 	
 	private Thread thread; 
+	
+	
+	private BufferedImage testImage;
+	
 	
 	//Constructor
 	public Game(String title, int width, int height)
@@ -61,6 +66,7 @@ public class Game implements Runnable
 	private void init()
 	{
 		_display = new Display(_title, _width, _height);
+		testImage = ImageLoader.loadImage("/Textures/29287-figure-1.jpg");
 	}
 	
 	private void tick()
@@ -87,10 +93,9 @@ public class Game implements Runnable
 		//Clear screen
 		_g.clearRect(0, 0, _width, _height);
 		
+		//Draw
 		
-		
-		_g.fillRect(10, 50, 50, 50);
-		
+		_g.drawImage(testImage, 20, 20, null);
 		
 		//End draw
 		_bs.show();
