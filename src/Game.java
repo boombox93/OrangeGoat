@@ -81,16 +81,16 @@ public class Game implements Runnable
 		_g = _bs.getDrawGraphics();
 		
 		//Draws rectangle on screen(x, y, width, height)
+		//_g.fillRect(10, 50, 50, 50);
 		//_g.fillRect(0, 0, _width, _height);
 		
 		//Clear screen
 		_g.clearRect(0, 0, _width, _height);
 		
-		//Draw
 		
-		//_g.drawRect(10, 50, 50, 50);
-		_g.setColor(Color.red);
+		
 		_g.fillRect(10, 50, 50, 50);
+		
 		
 		//End draw
 		_bs.show();
