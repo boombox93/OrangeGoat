@@ -1,7 +1,5 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 
 //This is the main class
@@ -18,10 +16,10 @@ public class Game implements Runnable
 	
 	private Thread _thread; 
 	
-	
-	//private BufferedImage _image;
-	//private SpriteSheet _sheet;
-	
+	//States
+	private State gameState;
+	@SuppressWarnings("unused")
+	private State menuState;
 	
 	//Constructor
 	public Game(String title, int width, int height)
@@ -67,13 +65,19 @@ public class Game implements Runnable
 	private void init()
 	{
 		_display = new Display(_title, _width, _height);
-		//_image = ImageLoader.loadImage("/Textures/download.png");
-		//_sheet = new SpriteSheet(_image);
+		Assets.init();
+		
+		gameState = new GameState();
+		menuState = new MenuState();
+		State.setState(gameState);
 	}
 	
 	private void tick()
 	{
-		
+		if(State.getState() != null)
+		{
+			State.getState().tick();
+		}
 	}
 	
 	//Draws to window
@@ -93,9 +97,20 @@ public class Game implements Runnable
 		
 		//Draw
 		
-		//_g.drawImage(_sheet.crop(17 , 133, 33, 51), 5, 5, null);
+		if(State.getState() != null)
+		{
+			State.getState().render(_g);
+		}
 		
-		
+		/*
+		 * _g.drawImage(Assets.grass, 0, 0, null);
+		_g.drawImage(Assets.wood, 128, 0, null);
+		_g.drawImage(Assets.brick, 0, 128, null);
+		_g.drawImage(Assets.stone, 128, 128, null);
+		_g.drawImage(Assets.dirt, 256, 0, null);
+		_g.drawImage(Assets.dirt, 256, 128, null);
+		_g.drawImage(Assets.player, 5, 5, null);
+		 */
 		
 		//End draw
 		_bs.show();
@@ -107,10 +122,39 @@ public class Game implements Runnable
 	{
 		init();
 		
+		int fps = 60;
+		
+		//1 billion nanoseconds divided by 60 seconds
+		double timePerTick = 1000000000 / fps;
+		double delta = 0;
+		long now;
+		long lastTime = System.nanoTime();
+		long timer = 0;
+		int ticks = 0;
+		
 		while(_running)
 		{
-			tick();
-			render();
+			now = System.nanoTime();
+			delta += (now - lastTime) / timePerTick;
+			timer += now - lastTime;
+			lastTime = now;
+			
+			//If delta is greater than or equal to 1, we have to tick and render to achieve 60 fps
+			if(delta >= 1)
+			{
+				tick();
+				render();
+				ticks++;
+				delta--;
+			}
+			
+			//1 second
+			if(timer >= 1000000000)
+			{
+				System.out.println("Ticks and Frames: " + ticks);
+				ticks = 0;
+				timer = 0;
+			}
 		}
 		
 		stop();
