@@ -19,8 +19,8 @@ public class Game implements Runnable
 	private Thread _thread; 
 	
 	
-	private BufferedImage _image;
-	private SpriteSheet _sheet;
+	//private BufferedImage _image;
+	//private SpriteSheet _sheet;
 	
 	
 	//Constructor
@@ -67,8 +67,8 @@ public class Game implements Runnable
 	private void init()
 	{
 		_display = new Display(_title, _width, _height);
-		_image = ImageLoader.loadImage("/Textures/download.png");
-		_sheet = new SpriteSheet(_image);
+		//_image = ImageLoader.loadImage("/Textures/download.png");
+		//_sheet = new SpriteSheet(_image);
 	}
 	
 	private void tick()
@@ -88,16 +88,14 @@ public class Game implements Runnable
 		
 		_g = _bs.getDrawGraphics();
 		
-		//Draws rectangle on screen(x, y, width, height)
-		//_g.fillRect(10, 50, 50, 50);
-		//_g.fillRect(0, 0, _width, _height);
-		
 		//Clear screen
 		_g.clearRect(0, 0, _width, _height);
 		
 		//Draw
 		
-		_g.drawImage(_sheet.crop(17 , 133, 33, 51), 5, 5, null);
+		//_g.drawImage(_sheet.crop(17 , 133, 33, 51), 5, 5, null);
+		
+		
 		
 		//End draw
 		_bs.show();
