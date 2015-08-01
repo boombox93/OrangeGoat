@@ -16,10 +16,11 @@ public class Game implements Runnable
 	private BufferStrategy _bs;
 	private Graphics _g;
 	
-	private Thread thread; 
+	private Thread _thread; 
 	
 	
-	private BufferedImage testImage;
+	private BufferedImage _image;
+	private SpriteSheet _sheet;
 	
 	
 	//Constructor
@@ -66,7 +67,8 @@ public class Game implements Runnable
 	private void init()
 	{
 		_display = new Display(_title, _width, _height);
-		testImage = ImageLoader.loadImage("/Textures/29287-figure-1.jpg");
+		_image = ImageLoader.loadImage("/Textures/download.png");
+		_sheet = new SpriteSheet(_image);
 	}
 	
 	private void tick()
@@ -95,7 +97,7 @@ public class Game implements Runnable
 		
 		//Draw
 		
-		_g.drawImage(testImage, 20, 20, null);
+		_g.drawImage(_sheet.crop(17 , 133, 33, 51), 5, 5, null);
 		
 		//End draw
 		_bs.show();
@@ -124,9 +126,9 @@ public class Game implements Runnable
 			return;
 		}
 		_running = true;
-		thread = new Thread(this);
+		_thread = new Thread(this);
 		//Calls run method above
-		thread.start();
+		_thread.start();
 	}
 	
 	public synchronized void stop()
@@ -139,7 +141,7 @@ public class Game implements Runnable
 		_running = false;
 		try 
 		{
-			thread.join();
+			_thread.join();
 		} 
 		catch (InterruptedException e) 
 		{
