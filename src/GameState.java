@@ -6,9 +6,10 @@ public class GameState extends State
 
 	private Player player;
 	
-	public GameState()
+	public GameState(Game game)
 	{
-		player = new Player(5, 5);
+		super(game);
+		player = new Player(game, 5, 5);
 	}
 	
 	@Override

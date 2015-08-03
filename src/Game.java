@@ -21,12 +21,16 @@ public class Game implements Runnable
 	@SuppressWarnings("unused")
 	private State menuState;
 	
+	//Input
+	private KeyManager _keyManager;
+	
 	//Constructor
 	public Game(String title, int width, int height)
 	{
 		_width = width;
 		_height = height;
 		_title = title;
+		_keyManager = new KeyManager();
 	}
 	
 	public int getWidth()
@@ -65,15 +69,18 @@ public class Game implements Runnable
 	private void init()
 	{
 		_display = new Display(_title, _width, _height);
+		_display.getFrame().addKeyListener(_keyManager);
 		Assets.init();
 		
-		gameState = new GameState();
-		menuState = new MenuState();
+		gameState = new GameState(this);
+		menuState = new MenuState(this);
 		State.setState(gameState);
 	}
 	
 	private void tick()
 	{
+		_keyManager.tick();
+		
 		if(State.getState() != null)
 		{
 			State.getState().tick();
@@ -159,6 +166,11 @@ public class Game implements Runnable
 		
 		stop();
 		
+	}
+	
+	public KeyManager getKeyManager()
+	{
+		return _keyManager;
 	}
 	
 	public synchronized void start()
