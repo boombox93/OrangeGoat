@@ -1,4 +1,5 @@
 package tilegame;
+
 import gfx.Assets;
 import input.KeyManager;
 
@@ -11,83 +12,45 @@ import states.State;
 import display.Display;
 
 
-//This is the main class
-public class Game implements Runnable
+public class Game implements Runnable 
 {
-	
+
 	private Display _display;
-	private String _title;
-	private int _width;
-	private int _height;
+	public int width, height;
+	public String title;
+	
 	private boolean _running = false;
+	private Thread _thread;
+	
 	private BufferStrategy _bs;
 	private Graphics _g;
 	
-	private Thread _thread; 
-	
 	//States
-	private State gameState;
-	@SuppressWarnings("unused")
-	private State menuState;
+	private State _gameState;
+	private State _menuState;
 	
 	//Input
 	private KeyManager _keyManager;
 	
-	//Constructor
 	public Game(String title, int width, int height)
 	{
-		_width = width;
-		_height = height;
-		_title = title;
+		this.width = width;
+		this.height = height;
+		this.title = title;
 		_keyManager = new KeyManager();
 	}
 	
-	public int getWidth()
-	{
-		return _width;
-	}
-	
-	public int getHeight()
-	{
-		return _height;
-	}
-	
-	public String getTitle()
-	{
-		return _title;
-	}
-	
-	public void setTitle(String title)
-	{
-		//*******SHOULD NOT NEED TO USE THIS*******
-		_title = title;
-	}
-	
-	public void setWidth(int width)
-	{
-		//*******SHOULD NOT NEED TO USE THIS*******
-		_width = width;
-	}
-	
-	public void setHeight(int height)
-	{
-		//*******SHOULD NOT NEED TO USE THIS*******
-		_height = height;
-	}
-
-	private void init()
-	{
-		_display = new Display(_title, _width, _height);
+	private void init(){
+		_display = new Display(title, width, height);
 		_display.getFrame().addKeyListener(_keyManager);
 		Assets.init();
 		
-		gameState = new GameState(this);
-		menuState = new MenuState(this);
-		State.setState(gameState);
+		_gameState = new GameState(this);
+		_menuState = new MenuState(this);
+		State.setState(_gameState);
 	}
 	
-	private void tick()
-	{
+	private void tick(){
 		_keyManager.tick();
 		
 		if(State.getState() != null)
@@ -96,9 +59,7 @@ public class Game implements Runnable
 		}
 	}
 	
-	//Draws to window
-	private void render()
-	{
+	private void render(){
 		_bs = _display.getCanvas().getBufferStrategy();
 		if(_bs == null)
 		{
@@ -108,39 +69,26 @@ public class Game implements Runnable
 		
 		_g = _bs.getDrawGraphics();
 		
-		//Clear screen
-		_g.clearRect(0, 0, _width, _height);
-		
-		//Draw
+		//Clear Screen
+		_g.clearRect(0, 0, width, height);
+		//Draw Here!
 		
 		if(State.getState() != null)
 		{
 			State.getState().render(_g);
 		}
 		
-		/*
-		 * _g.drawImage(Assets.grass, 0, 0, null);
-		_g.drawImage(Assets.wood, 128, 0, null);
-		_g.drawImage(Assets.brick, 0, 128, null);
-		_g.drawImage(Assets.stone, 128, 128, null);
-		_g.drawImage(Assets.dirt, 256, 0, null);
-		_g.drawImage(Assets.dirt, 256, 128, null);
-		_g.drawImage(Assets.player, 5, 5, null);
-		 */
-		
-		//End draw
+		//End Drawing!
 		_bs.show();
 		_g.dispose();
 	}
 	
-	@Override
-	public void run() 
+	public void run()
 	{
+		
 		init();
 		
 		int fps = 60;
-		
-		//1 billion nanoseconds divided by 60 seconds
 		double timePerTick = 1000000000 / fps;
 		double delta = 0;
 		long now;
@@ -155,7 +103,6 @@ public class Game implements Runnable
 			timer += now - lastTime;
 			lastTime = now;
 			
-			//If delta is greater than or equal to 1, we have to tick and render to achieve 60 fps
 			if(delta >= 1)
 			{
 				tick();
@@ -164,7 +111,6 @@ public class Game implements Runnable
 				delta--;
 			}
 			
-			//1 second
 			if(timer >= 1000000000)
 			{
 				System.out.println("Ticks and Frames: " + ticks);
@@ -190,7 +136,6 @@ public class Game implements Runnable
 		}
 		_running = true;
 		_thread = new Thread(this);
-		//Calls run method above
 		_thread.start();
 	}
 	
@@ -200,7 +145,6 @@ public class Game implements Runnable
 		{
 			return;
 		}
-		
 		_running = false;
 		try 
 		{
@@ -208,8 +152,8 @@ public class Game implements Runnable
 		} 
 		catch (InterruptedException e) 
 		{
-			
 			e.printStackTrace();
 		}
 	}
+	
 }

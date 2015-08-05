@@ -2,34 +2,38 @@ package states;
 import java.awt.Graphics;
 
 import entities.creatures.Player;
-import gfx.Assets;
 import tilegame.Game;
+import tiles.Tile;
+import worlds.World;
 
 
-public class GameState extends State
+
+public class GameState extends State 
 {
-
-	private Player player;
+	
+	private Player _player;
+	private World _world;
 	
 	public GameState(Game game)
 	{
 		super(game);
-		player = new Player(game, 5, 5);
+		_player = new Player(game, 100, 100);
+		_world = new World("");
 	}
 	
 	@Override
 	public void tick() 
 	{
-		player.tick();
-		
+		_world.tick();
+		_player.tick();
 	}
 
 	@Override
 	public void render(Graphics g) 
 	{
-		g.drawImage(Assets.dirt, 0, 0, null);
-		player.render(g);
-		
+		_world.render(g);
+		//Tile.tiles[0].render(g, 0, 0);
+		_player.render(g);
 	}
 
 }

@@ -6,16 +6,15 @@ import java.awt.Graphics;
 
 import tilegame.Game;
 
-public class Player extends Creature
+public class Player extends Creature 
 {
-	
-	private Game _game;
 
+	private Game _game;
+	
 	public Player(Game game, float x, float y) 
 	{
 		super(x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
 		_game = game;
-		
 	}
 
 	@Override
@@ -33,22 +32,18 @@ public class Player extends Creature
 		if(_game.getKeyManager().up)
 		{
 			yMove = -speed;
-			
 		}
 		if(_game.getKeyManager().down)
 		{
 			yMove = speed;
-			
 		}
 		if(_game.getKeyManager().left)
 		{
 			xMove = -speed;
-			
 		}
 		if(_game.getKeyManager().right)
 		{
 			xMove = speed;
-			
 		}
 	}
 
@@ -56,7 +51,6 @@ public class Player extends Creature
 	public void render(Graphics g) 
 	{
 		g.drawImage(Assets.player, (int) x, (int) y, width, height, null);
-		
 	}
 
 }
