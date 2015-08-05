@@ -1,4 +1,9 @@
+package states;
 import java.awt.Graphics;
+
+import entities.creatures.Player;
+import gfx.Assets;
+import tilegame.Game;
 
 
 public class GameState extends State

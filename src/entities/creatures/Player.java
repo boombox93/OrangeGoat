@@ -1,5 +1,10 @@
+package entities.creatures;
+
+import gfx.Assets;
 
 import java.awt.Graphics;
+
+import tilegame.Game;
 
 public class Player extends Creature
 {

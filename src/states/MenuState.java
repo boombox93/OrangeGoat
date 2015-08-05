@@ -1,4 +1,7 @@
+package states;
 import java.awt.Graphics;
+
+import tilegame.Game;
 
 
 public class MenuState extends State 

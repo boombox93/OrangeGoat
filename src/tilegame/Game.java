@@ -1,5 +1,14 @@
+package tilegame;
+import gfx.Assets;
+import input.KeyManager;
+
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+
+import states.GameState;
+import states.MenuState;
+import states.State;
+import display.Display;
 
 
 //This is the main class

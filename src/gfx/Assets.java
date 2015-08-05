@@ -1,3 +1,4 @@
+package gfx;
 import java.awt.image.BufferedImage;
 
 //Any image, sound or piece of music in our game
