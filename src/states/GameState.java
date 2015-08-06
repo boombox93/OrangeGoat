@@ -18,7 +18,7 @@ public class GameState extends State
 	{
 		super(game);
 		_player = new Player(game, 100, 100);
-		_world = new World("");
+		_world = new World("Resources/worlds/world1.txt");
 	}
 	
 	@Override

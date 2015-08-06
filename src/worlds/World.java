@@ -3,11 +3,15 @@ package worlds;
 import java.awt.Graphics;
 
 import tiles.Tile;
+import utils.Utils;
 
 public class World 
 {
 	private int _width;
 	private int _height;
+	private int _spawnX;
+	private int _spawnY;
+	
 	private int[][] _tiles;
 	
 	public World(String path)
@@ -44,16 +48,25 @@ public class World
 	
 	private void loadWorld(String path)
 	{
-		_width = 5;
-		_height = 5;
+		String file = Utils.loadFileAsString(path);
+		String[] tokens = file.split("\\s+");
+		_width = Utils.parseInt(tokens[0]);
+		_height = Utils.parseInt(tokens[1]);
+		_spawnX = Utils.parseInt(tokens[2]);
+		_spawnY = Utils.parseInt(tokens[3]);
+		
 		_tiles = new int[_width][_height];
 		
-		for(int i = 0; i < _width; i++)
+		for(int j = 0; j < _height; j++)
 		{
-			for(int j = 0; j < _height; j++)
+			for(int i = 0; i < _width; i++)
 			{
-				_tiles[i][j] = 2;
+				_tiles[i][j] = Utils.parseInt(tokens[(i + j * _width) + 4]);
 			}
 		}
+	
+	
+				
+		
 	}
 }
